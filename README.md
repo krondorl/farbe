@@ -1,3 +1,5 @@
+<img src="assets/farbe---logo.svg" width="512"/>
+
 # Farbe
 
 Display statistics of used colors in CSS and SCSS files.
@@ -19,6 +21,10 @@ Please see the `notes/` folder.
 ## Run
 
 In the project folder, execute: `cargo run`
+
+## Tests
+
+Use: `cargo test`
 
 ## Build
 
