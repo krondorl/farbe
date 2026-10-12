@@ -8,6 +8,16 @@ Farbe means "color" in German language.
 
 **Warning: under construction...**
 
+## Supported Color Formats
+
+- named colors: `white`, `black`, `red`, ...
+- hexadecimal 3 chars `#f00`
+- hexadecimal 4 chars `#f00a`
+- hexadecimal 6 chars `#ff00aa`
+- hexadecimal 8 chars `#ff00aa44`
+- rgb, `rgb(255, 0, 0)`
+- rgba `rgba(255, 0, 0, 0.75)`
+
 ## Notes
 
 Please see the `notes/` folder.
