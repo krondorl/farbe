@@ -76,6 +76,35 @@ fn search_hex3_counts_normalized_values() {
 }
 
 #[test]
+fn search_hex3_counts_using_css_code() {
+    let mut stats = Vec::new();
+
+    let css = "
+    .class1 {
+        color: #f00;
+    }
+    .class2 {
+        background-color: #f000;
+    }
+    .class3 {
+        color: #0f0;
+    }
+    .class4 {
+        border: 1px solid #0f00;
+    }
+    p {
+        color: unknown;
+    }
+    ";
+
+    search_hex3(css, &mut stats);
+
+    assert_eq!(stats.len(), 2);
+    assert_stat(&stats, ColorType::Hex3, "#f00", 1);
+    assert_stat(&stats, ColorType::Hex3, "#0f0", 1);
+}
+
+#[test]
 fn search_hex4_counts_normalized_values() {
     let mut stats = Vec::new();
 
