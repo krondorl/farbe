@@ -1,6 +1,7 @@
 // Copyright 2026-present Adam Burucs. MIT license.
 
 use crate::model::{ColorStat, ColorType};
+use crate::named_colors::COLORS;
 use crate::search::{
     search_hex3, search_hex4, search_hex6, search_hex8, search_named_colors, search_rgb,
     search_rgba,
@@ -32,6 +33,36 @@ fn search_named_colors_counts_case_insensitively_and_merges_existing_stats() {
     assert_eq!(stats.len(), 2);
     assert_stat(&stats, ColorType::NamedColor, "red", 3);
     assert_stat(&stats, ColorType::NamedColor, "blue", 1);
+}
+
+#[test]
+fn search_named_colors_using_css_code() {
+    let mut stats = Vec::new();
+
+    let css = "
+    .class1 {
+        color: red;
+    }
+    .class2 {
+        background-color: blue;
+    }
+    .class3 {
+        color: red;
+    }
+    .class4 {
+        border: 1px solid green;
+    }
+    p {
+        color: unknown;
+    }
+    ";
+
+    search_named_colors(css, &COLORS, &mut stats);
+
+    assert_eq!(stats.len(), 3);
+    assert_stat(&stats, ColorType::NamedColor, "red", 2);
+    assert_stat(&stats, ColorType::NamedColor, "blue", 1);
+    assert_stat(&stats, ColorType::NamedColor, "green", 1);
 }
 
 #[test]
