@@ -11,7 +11,7 @@ pub enum ColorType {
 }
 
 pub struct ColorStat {
-    color_type: ColorType,
-    value: String,
-    count: u64,
+    pub color_type: ColorType,
+    pub value: String,
+    pub count: u64,
 }
