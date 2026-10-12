@@ -1,6 +1,7 @@
 // Copyright 2026-present Adam Burucs. MIT license.
 
-pub const COLORS: [&'static str; 148] = [
+#[allow(dead_code)]
+pub const COLORS: [&str; 148] = [
     "black",
     "silver",
     "gray",
