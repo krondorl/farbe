@@ -1,0 +1,23 @@
+* {
+  border: 1px solid transparent;
+}
+
+body {
+  background-color: #fff;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  color: navy;
+}
+
+.header {
+  background-color: #f0f0f0;
+  color: #3334;
+}
+
+.footer {
+  background-color: #f0f0f055;
+}
