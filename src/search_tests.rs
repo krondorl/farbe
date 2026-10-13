@@ -115,6 +115,35 @@ fn search_hex4_counts_normalized_values() {
 }
 
 #[test]
+fn search_hex4_counts_using_css_code() {
+    let mut stats = Vec::new();
+
+    let css = "
+    .class1 {
+        color: #f00a;
+    }
+    .class2 {
+        background-color: #f00a;
+    }
+    .class3 {
+        color: #00ff;
+    }
+    .class4 {
+        border: 1px solid #0f0010;
+    }
+    p {
+        color: unknown;
+    }
+    ";
+
+    search_hex4(css, &mut stats);
+
+    assert_eq!(stats.len(), 2);
+    assert_stat(&stats, ColorType::Hex4, "#f00a", 2);
+    assert_stat(&stats, ColorType::Hex4, "#00ff", 1);
+}
+
+#[test]
 fn search_hex6_counts_normalized_values() {
     let mut stats = Vec::new();
 
@@ -125,6 +154,37 @@ fn search_hex6_counts_normalized_values() {
 }
 
 #[test]
+fn search_hex6_counts_using_css_code() {
+    let mut stats = Vec::new();
+
+    let css = "
+    .class1 {
+        color: #aabb00;
+
+    }
+    .class2 {
+        background-color: #ff00aa;
+    }
+    .class3 {
+        color: #00ff00;
+    }
+    .class4 {
+        border: 1px solid transparent;
+    }
+    p {
+        color: unknown;
+    }
+    ";
+
+    search_hex6(css, &mut stats);
+
+    assert_eq!(stats.len(), 3);
+    assert_stat(&stats, ColorType::Hex6, "#aabb00", 1);
+    assert_stat(&stats, ColorType::Hex6, "#ff00aa", 1);
+    assert_stat(&stats, ColorType::Hex6, "#00ff00", 1);
+}
+
+#[test]
 fn search_hex8_counts_normalized_values() {
     let mut stats = Vec::new();
 
@@ -132,6 +192,37 @@ fn search_hex8_counts_normalized_values() {
 
     assert_eq!(stats.len(), 1);
     assert_stat(&stats, ColorType::Hex8, "#a1b2c3d4", 2);
+}
+
+#[test]
+fn search_hex8_counts_using_css_code() {
+    let mut stats = Vec::new();
+
+    let css = "
+    .class1 {
+        color: #aabb00ff;
+
+    }
+    .class2 {
+        background-color: #ff00aaff;
+    }
+    .class3 {
+        color: #00ff00ff;
+    }
+    .class4 {
+        border: 1px solid blue;
+    }
+    p {
+        color: red;
+    }
+    ";
+
+    search_hex8(css, &mut stats);
+
+    assert_eq!(stats.len(), 3);
+    assert_stat(&stats, ColorType::Hex8, "#aabb00ff", 1);
+    assert_stat(&stats, ColorType::Hex8, "#ff00aaff", 1);
+    assert_stat(&stats, ColorType::Hex8, "#00ff00ff", 1);
 }
 
 #[test]
@@ -146,6 +237,32 @@ fn search_rgb_counts_exact_matches_and_merges_existing_stats() {
 }
 
 #[test]
+fn search_rgb_counts_using_css_code() {
+    let mut stats = Vec::new();
+
+    let css = "
+    body {
+        background-color: transparent;
+    }
+    p {
+        color: black;
+    }
+    .class1 {
+        color: rgb(1, 2, 3);
+    }
+    .class2 {
+        background-color: rgb(4, 5, 6);
+    }
+    ";
+
+    search_rgb(css, &mut stats);
+
+    assert_eq!(stats.len(), 2);
+    assert_stat(&stats, ColorType::Rgb, "rgb(1, 2, 3)", 1);
+    assert_stat(&stats, ColorType::Rgb, "rgb(4, 5, 6)", 1);
+}
+
+#[test]
 fn search_rgba_counts_valid_alpha_values_and_merges_existing_stats() {
     let mut stats = vec![stat(ColorType::Rgba, "rgba(1, 2, 3, 0.5)", 1)];
 
@@ -157,4 +274,30 @@ fn search_rgba_counts_valid_alpha_values_and_merges_existing_stats() {
     assert_eq!(stats.len(), 2);
     assert_stat(&stats, ColorType::Rgba, "rgba(1, 2, 3, 0.5)", 3);
     assert_stat(&stats, ColorType::Rgba, "rgba(4,5,6,1)", 1);
+}
+
+#[test]
+fn search_rgba_counts_alpha_using_css_code() {
+    let mut stats = Vec::new();
+
+    let css = "
+    body {
+        background-color: transparent;
+    }
+    p {
+        color: black;
+    }
+    .class1 {
+        color: rgba(1, 2, 3, 0.5);
+    }
+    .class2 {
+        background-color: rgba(4, 5, 6, 1);
+    }
+    ";
+
+    search_rgba(css, &mut stats);
+
+    assert_eq!(stats.len(), 2);
+    assert_stat(&stats, ColorType::Rgba, "rgba(1, 2, 3, 0.5)", 1);
+    assert_stat(&stats, ColorType::Rgba, "rgba(4, 5, 6, 1)", 1);
 }
