@@ -1,5 +1,6 @@
 // Copyright 2026-present Adam Burucs. MIT license.
 
+#[derive(Debug)]
 pub enum ColorType {
     Hex3,
     Hex4,
@@ -10,6 +11,7 @@ pub enum ColorType {
     NamedColor,
 }
 
+#[derive(Debug)]
 pub struct ColorStat {
     pub color_type: ColorType,
     pub value: String,
