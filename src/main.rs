@@ -19,6 +19,8 @@ use crate::search::{
 };
 use crate::utility::{is_stylesheet, print_info};
 use clap::{CommandFactory, Parser};
+use tabled::Table;
+use tabled::settings::Style;
 
 const FILE_SIZE_LIMIT: u64 = 16 * 1024 * 1024; // 16 MB
 
@@ -67,9 +69,12 @@ fn main() -> std::io::Result<()> {
                 search_rgb(&contents, &mut stats);
                 search_rgba(&contents, &mut stats);
 
+                stats.sort_by_key(|c| std::cmp::Reverse(c.count));
+                let mut table = Table::new(stats);
+                table.with(Style::modern());
+
                 println!();
-                println!("Stats: {:?}", stats);
-                println!();
+                println!("{table}");
 
                 Ok(())
             } else {
