@@ -6,8 +6,6 @@ Display statistics of used colors in CSS and SCSS files.
 
 Farbe means "color" in German language.
 
-**Warning: under construction...**
-
 ## Supported Color Formats
 
 - named colors: `white`, `black`, `red`, ...
