@@ -11,6 +11,7 @@ keywords = ["css", "scss", "colors", "color-stats", "color-statistics", "color-p
 [dependencies]
 clap = { version = "4.6.7", features = ["derive"] }
 regex = "1.13.1"
+tabled = "0.22.0"
 
 [profile.release]
 strip = true  # Strip symbols from the binary
