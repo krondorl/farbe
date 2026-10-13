@@ -13,6 +13,18 @@ p {
   color: navy;
 }
 
+li {
+  color: navy;
+}
+
+h1 {
+  color: navy;
+}
+
+h2 {
+  color: black;
+}
+
 .header {
   background-color: #f0f0f0;
   color: #3334;
