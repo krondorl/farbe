@@ -301,3 +301,59 @@ fn search_rgba_counts_alpha_using_css_code() {
     assert_stat(&stats, ColorType::Rgba, "rgba(1, 2, 3, 0.5)", 1);
     assert_stat(&stats, ColorType::Rgba, "rgba(4, 5, 6, 1)", 1);
 }
+
+#[test]
+fn search_mixed_color_formats() {
+    let mut stats = Vec::new();
+
+    let css = "
+    body {
+        background-color: transparent;
+    }
+    p {
+        color: black;
+    }
+    body {
+        color: red;
+    }
+    .class1 {
+        color: #f00;
+    }
+    .class2 {
+        color: #0f0f;
+    }
+    .class3 {
+        color: #0ffff0;
+    }
+    .class4 {
+        color: #0ffff0aa;
+    }
+    .x {
+        color: unknown;
+    }
+    .class5 {
+        background-color: rgb(40, 50, 6);
+    }
+    .class6 {
+        background-color: rgba(255, 25, 26, 0.5);
+    }
+    ";
+
+    search_named_colors(css, &COLORS, &mut stats);
+    search_hex3(css, &mut stats);
+    search_hex4(css, &mut stats);
+    search_hex6(css, &mut stats);
+    search_hex8(css, &mut stats);
+    search_rgb(css, &mut stats);
+    search_rgba(css, &mut stats);
+
+    assert_eq!(stats.len(), 8);
+    assert_stat(&stats, ColorType::NamedColor, "black", 1);
+    assert_stat(&stats, ColorType::NamedColor, "red", 1);
+    assert_stat(&stats, ColorType::Hex3, "#f00", 1);
+    assert_stat(&stats, ColorType::Hex4, "#0f0f", 1);
+    assert_stat(&stats, ColorType::Hex6, "#0ffff0", 1);
+    assert_stat(&stats, ColorType::Hex8, "#0ffff0aa", 1);
+    assert_stat(&stats, ColorType::Rgb, "rgb(40, 50, 6)", 1);
+    assert_stat(&stats, ColorType::Rgba, "rgba(255, 25, 26, 0.5)", 1);
+}
